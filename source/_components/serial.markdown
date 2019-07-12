@@ -74,17 +74,11 @@ void setup() {
 
 void loop() {
   StaticJsonBuffer<100> jsonBuffer;
-  JsonObject& json = prepareResponse(jsonBuffer);
-  json.printTo(Serial);
+  jsonBuffer[temperature] = analogRead(A0);
+  jsonBuffer[humidity] = analogRead(A1);
+  serializeJson(jsonBuffer, Serial);
   Serial.println();
   delay(2000);
-}
-
-JsonObject& prepareResponse(JsonBuffer& jsonBuffer) {
-  JsonObject& root = jsonBuffer.createObject();
-  root["temperature"] = analogRead(A0);
-  root["humidity"] = analogRead(A1);
-  return root;
 }
 ```
 
